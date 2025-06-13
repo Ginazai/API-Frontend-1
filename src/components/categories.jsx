@@ -69,6 +69,8 @@ export default function Categories({ token, categories, setCategories, roles }) 
         }
     };
 	
+	if (!token) return null;
+	
 	return(
 		<Container className="my-4">
 			<div

@@ -13,7 +13,7 @@ import {  getCategorias } from './services/api';
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [activeUser, setActiveUser] = useState(null);
-  const [roles, setRoles] = useState([]);
+  const [roles, setRoles] = useState(() => localStorage.getItem('roles') || []);
   const [allCategories, setAllCategories] = useState([]);
   const [activeKey, setActiveKey] = useState(() => localStorage.getItem('activeKey') || '');
   
@@ -39,6 +39,7 @@ function App() {
       const payload = parseJwt(token);
       setActiveUser(payload?.sub); 
 	  setRoles(payload?.roles || []);
+	  localStorage.setItem('roles', JSON.stringify(payload?.roles || []));
     } else {
       setActiveUser(null);
     }

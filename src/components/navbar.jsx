@@ -78,6 +78,8 @@ function MyNavbar({ token, setToken, activeUser,
   const handleLogout = () => {
 	setToken(null);
     localStorage.removeItem('token');	
+	localStorage.removeItem('activeKey');
+	localStorage.removeItem('roles');
 	navigate('/'); // Redirect to home
 	setActiveUser(null);
 	setRoles([]);

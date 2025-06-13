@@ -166,6 +166,8 @@ function Productos({ token, categories, setCategories, roles }) {
 	      setError('Error creating product');
 	    }
 	  };
+	  
+	  if (!token) return null;
 
 	  return (
 	    <Container className="my-3">

@@ -10,6 +10,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import UserImg from '../assets/images/user.png';
+import { useNavigate  } from 'react-router-dom';
 
 function Users({ token, activeUser, roles }) {
   const [users, setUsers] = useState([]);
@@ -21,13 +22,14 @@ function Users({ token, activeUser, roles }) {
         active: false,
         roles: []
    });
-   const [newForm, setNewForm] = useState({
+  const [newForm, setNewForm] = useState({
 		name: '',
         username: '',
         password: '',
         active: true
     });
 	const [showNewUserModal, setShowNewUserModal] = useState(false);
+	const navigate = useNavigate();
 
   useEffect(() => {
     if (!token) return;
@@ -35,6 +37,7 @@ function Users({ token, activeUser, roles }) {
       .then(res => setUsers(res.data))
       .catch(() => setError('Unauthorized or failed to fetch users'));
   }, [token]);
+  
 
   useEffect(() => {
     if (!token) return;
@@ -43,14 +46,20 @@ function Users({ token, activeUser, roles }) {
       return;
     }
 	const timer = setTimeout(() => {
-	    if (!roles.includes('ROLE_ADMIN')) setWarning('No tienes permisos para ver esta página');
-	    else if (users.length === 0) setWarning('No hay usuarios registrados');
+	    if (users.length === 0) setWarning('No hay usuarios registrados');
 	    else setWarning('');
 	}, 1000);
 	return () => clearTimeout(timer);
-  }, [token, roles, users, error]);
-
-  if (!token) return null;
+  }, [token, users, error]);
+  
+  useEffect(() => {
+	if (!roles.includes('ROLE_ADMIN')){
+		navigate('/');
+	}
+	}, [roles, navigate]);
+	
+	if (!token) return null;
+	if (!roles.includes('ROLE_ADMIN')) return null;
   
   const handleEditClick = (user) => {
     // Aquí puedes implementar la lógica para abrir el modal de edición
@@ -325,9 +334,7 @@ function Users({ token, activeUser, roles }) {
                     </Button>
                     <Button variant="primary"
 					form="edit-user-form"
-					type="submit"
-					onClick={handleSaveChanges}
-					>
+					type="submit">
                         Guardar Cambios
                     </Button>
                 </Modal.Footer>
