@@ -13,6 +13,8 @@ function Productos({ token, categories, setCategories, roles }) {
 	const [editForm, setEditForm] = useState({ 
 		name: '', 
 		price: '', 
+		quantity: '',
+		description: '',
 		categories: [],
 		active: true 
 	});
@@ -22,6 +24,8 @@ function Productos({ token, categories, setCategories, roles }) {
 	const [saveForm, setSaveForm] = useState({
 		name: '',
 		price: '',
+		quantity: '',
+		description: '',
 		categories: [],
 		active: true
 	});
@@ -68,6 +72,8 @@ function Productos({ token, categories, setCategories, roles }) {
 	  setEditForm({ 
 	    name: producto.name, 
 	    price: producto.price, 
+        quantity: producto.quantity,
+	    description: producto.description || '',
 	    categories: fullCategories, 
 	    active: producto.active 
 	  });
@@ -245,8 +251,7 @@ function Productos({ token, categories, setCategories, roles }) {
                         </FloatingLabel>
 					</Row>
 					<Row>
-					    <Form.Group as={Col}>
-						    <Form.Label>Precio</Form.Label>							
+					    <Form.Group as={Col}>						
 			                <InputGroup>
 	                            <InputGroup.Text>$</InputGroup.Text>
 	                            <Form.Control
@@ -258,6 +263,34 @@ function Productos({ token, categories, setCategories, roles }) {
 	                            />
 	                        </InputGroup>
 						</Form.Group>
+						<Form.Group as={Col}>
+				            <InputGroup>
+			                    <InputGroup.Text>Unidades</InputGroup.Text>
+                                <Form.Control
+                                    type="number"
+                                    name="quantity"
+                                    value={saveForm.quantity}
+                                    onChange={handleSaveFormChange}
+                                    placeholder="Cantidad del producto"
+                                />
+			                </InputGroup>
+						</Form.Group>
+				    </Row>
+					<Row className="mb-3">
+						<FloatingLabel
+						controlId='floatingInput'
+						className='my-3'
+						label="Descripción del producto"
+						>
+					    <Form.Control
+				            as="textarea"
+			                name="description"
+		                    value={saveForm.description}
+	                        onChange={handleSaveFormChange}
+                            placeholder="Descripción del producto"
+	                        rows={3}
+	                      />
+						  </FloatingLabel>
 				    </Row>
 		            <Row className="mb-3">
                         <Form.Label>Categorías del producto:</Form.Label>
@@ -325,7 +358,11 @@ function Productos({ token, categories, setCategories, roles }) {
 					<Card.Subtitle className="my-1 text-muted">
 						{producto.active === true ? "Disponible" : "No disponible"}
 					</Card.Subtitle>
+					<Card.Text>{producto.description || 'Sin descripción'}</Card.Text>
 	                <Card.Text>${producto.price}</Card.Text>
+					<Card.Text>
+					    Unidades disponibles: {producto.quantity}
+					</Card.Text>
 	                <div xs="auto">
 	                  <Button
 	                    onClick={() => handleEditClick(producto)}
@@ -375,7 +412,7 @@ function Productos({ token, categories, setCategories, roles }) {
 	                  </Row>
 	                  <Row>
 	                    <Form.Group as={Col}>
-	                      <Form.Label>Precio</Form.Label>
+						<Form.Label>Precio</Form.Label>
 	                      <InputGroup>
 	                        <InputGroup.Text>$</InputGroup.Text>
 	                        <Form.Control
@@ -386,8 +423,36 @@ function Productos({ token, categories, setCategories, roles }) {
 	                          placeholder="Precio del producto"
 	                        />
 	                      </InputGroup>
-	                    </Form.Group>
+						  </Form.Group>
+						  <Form.Group as={Col}>
+						  <Form.Label>Unidades</Form.Label>
+                            <InputGroup>
+                                <InputGroup.Text>Unidades</InputGroup.Text>
+                                <Form.Control
+                                    type="number"
+                                    name="quantity"
+                                    value={editForm.quantity}
+                                    onChange={handleFormChange}
+                                    placeholder="Cantidad del producto"
+                                />
+                            </InputGroup>
+                          </Form.Group>
 	                  </Row>
+					  <Row className="my-3">
+						  <FloatingLabel
+						  controlId="floatingInput"
+						  label="Descripción del producto"
+						  >
+				          <Form.Control
+		                    as="textarea"
+		                    name="description"
+		                    value={editForm.description}
+		                    onChange={handleFormChange}
+		                    placeholder="Descripción del producto"
+		                    rows={3}
+		                  	/>
+						  </FloatingLabel>
+				      </Row>
 					  <Row className="mb-3">
 					    <Form.Label>Categorías del producto:</Form.Label>
 						{categories.map(cat => (
