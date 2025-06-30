@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 const test_url = 'http://localhost:8081'; // Cambia esto según tu configuración
-const railway_url = 'https://api-frontend-1-production.up.railway.app'; // Cambia esto según tu configuración
+const railway_url = 'switchback.proxy.rlwy.net:13851'; // Cambia esto según tu configuración
 const api = axios.create({
   baseURL: railway_url, // cambia según tu puerto/API
   headers: {
