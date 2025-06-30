@@ -3,7 +3,7 @@ import axios from 'axios';
 
 //const test_url = 'http://localhost:8081';
 const api = axios.create({
-  baseURL: `${API_URL}`, // cambia según tu puerto/API
+  baseURL: `https://spring-jpa-test-api-production.up.railway.app/`, // cambia según tu puerto/API
   headers: {
     'Content-Type': 'application/json',
   },
