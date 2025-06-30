@@ -19,7 +19,7 @@ function Productos({ token, categories, setCategories, roles }) {
 		active: true 
 	});
 	const [error, setError] = useState('');
-	const [productCategories, setProductCategories] = useState([]);
+	const [setProductCategories] = useState([]);
 	const [saveModal, setSaveModal] = useState(false);
 	const [saveForm, setSaveForm] = useState({
 		name: '',
