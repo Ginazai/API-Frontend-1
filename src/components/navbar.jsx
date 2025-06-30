@@ -147,6 +147,7 @@ function MyNavbar({ token, setToken, activeUser,
                   value={username}
                   onChange={e => setUsername(e.target.value)}
                   placeholder="Username"
+				  name="username"
                   required
                 />
               </FloatingLabel>
@@ -160,6 +161,7 @@ function MyNavbar({ token, setToken, activeUser,
 					value={password}
 					onChange={e => setPassword(e.target.value)}
 					placeholder="Password"
+					name="password"
 					required
 					/>
 			  </FloatingLabel>
