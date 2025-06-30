@@ -7,7 +7,7 @@ import { Card, Col, Container,
 import { parseDateLong } from '../utils/parseDate';
 import GearImg from '../assets/images/gears.png';
 
-function Productos({ token, categories, setCategories, roles }) {
+function Productos({ token, categories, roles }) {
 	const [products, setProducts] = useState([]);
 	const [editProductId, setEditProductId] = useState(null);
 	const [editForm, setEditForm] = useState({ 
@@ -19,7 +19,7 @@ function Productos({ token, categories, setCategories, roles }) {
 		active: true 
 	});
 	const [error, setError] = useState('');
-	const [setProductCategories] = useState([]);
+	const [, setProductCategories] = useState([]);
 	const [saveModal, setSaveModal] = useState(false);
 	const [saveForm, setSaveForm] = useState({
 		name: '',
@@ -59,7 +59,7 @@ function Productos({ token, categories, setCategories, roles }) {
 		} else {
 			setProductCategories([]);		
 		}
-	}, [editProductId, token]);	
+	}, [editProductId, token, setProductCategories]);	
 
 	// Open modal and initialize form
 	const handleEditClick = (producto) => {

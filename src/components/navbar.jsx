@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { parseJwt } from '../utils/parseJWT';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -23,6 +23,16 @@ function MyNavbar({ token, setToken, activeUser,
   const navigate = useNavigate();
   // Session timer
   const [seconds, setSeconds] = useState(0);
+  
+  const handleLogout = useCallback(() => {
+    setToken(null);
+    localStorage.removeItem('token');
+    localStorage.removeItem('activeKey');
+    localStorage.removeItem('roles');
+    navigate('/'); // Redirect to home
+    setActiveUser(null);
+    setRoles([]);
+  }, [setToken, navigate, setActiveUser, setRoles]);
 
   useEffect(() => {
     localStorage.setItem('activeKey', activeKey);
@@ -37,7 +47,7 @@ function MyNavbar({ token, setToken, activeUser,
     setSeconds(0);
     const interval = setInterval(() => setSeconds(s => s + 1), 1000);
     return () => clearInterval(interval);
-  }, [token]);
+  }, [handleLogout, token]);
   
   useEffect(() => {
     if (!token) return;
@@ -58,7 +68,7 @@ function MyNavbar({ token, setToken, activeUser,
     }, msUntilExpiry);
 
     return () => clearTimeout(timeout);
-  }, [token]);
+  }, [handleLogout, token]);
   
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -74,16 +84,7 @@ function MyNavbar({ token, setToken, activeUser,
       setLoginError('Invalid credentials');
     }
   };
-  
-  const handleLogout = () => {
-	setToken(null);
-    localStorage.removeItem('token');	
-	localStorage.removeItem('activeKey');
-	localStorage.removeItem('roles');
-	navigate('/'); // Redirect to home
-	setActiveUser(null);
-	setRoles([]);
-  }	
+
   const handleSelect = (key) => {
 	setActiveKey(key);
   }
