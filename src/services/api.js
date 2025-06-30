@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+
+const test_url = 'http://localhost:8081'; // Cambia esto según tu configuración
+const railway_url = 'https://api-frontend-1-production.up.railway.app'; // Cambia esto según tu configuración
 const api = axios.create({
-  baseURL: 'http://localhost:8081', // cambia según tu puerto/API
+  baseURL: railway_url, // cambia según tu puerto/API
   headers: {
     'Content-Type': 'application/json',
   },
